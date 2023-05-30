@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Danh sach Khach hang</h2>
+<a th:href="@{/create}">add new customer</a>
+<form th:action="@{/}" method="get">
+    <select name="sortBy" id="">
+        <option value="age-ASC">sap xep tuoi tang dan</option>
+        <option value="age-DESC">sap xep tuoi giam dan</option>
+        <option value="name-ASC">sap xep ten tang dan</option>
+        <option value="name-DESC">sap xep ten giam dan</option>
+    </select>
+    <button type="submit">chon</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>id</th>
+        <th>name</th>
+        <th>age</th>
+        <th colspan="2">action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cus,cusStat:${list}">
+        <td th:text="${cusStat.count}"></td>
+        <td th:text="${cus.id}"></td>
+        <td th:text="${cus.name}"></td>
+        <td th:text="${cus.age}"></td>
+        <td><a th:href="@{|/edit/${cus.id}|}">Edit</a></td>
+        <td><a th:href="@{|/delete/${cus.id}|}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:if="${list.hasPrevious()}" th:href="@{|/?page=${list.number - 1}|}">Previous</a>
+    <span th:text="${list.number + 1}"></span><span th:text="${list.getTotalPages()}"></span>
+    <a th:if="${list.hasNext()}" th:href="@{|/?page=${list.number + 1}|}">Next</a>
+</div>
+</body>
+</html>
